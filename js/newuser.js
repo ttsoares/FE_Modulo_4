@@ -3,10 +3,8 @@ function NewUser() {
   let Password1 = (document.getElementById("passWord_1").value);
   let Password2 = (document.getElementById("passWord_2").value);
 
-
   let test_Username = Username.replace(/\s/g, ''); // remove spaces
 
-  //The MD5 hash bellow is the result of an empty string for password
   if (test_Username=='') {
     // Empty user fields are not allowed
     const Empty = new bootstrap.Modal(document.getElementById('empty_field'));
@@ -31,7 +29,10 @@ async function criaUser(Uname, Pass) {
     ClockAnim.classList.remove("invisible");
     ClockAnim.classList.add("visible");
 
-    await axios.post(`${url}/user`, {name: Uname, pass: Pass});
+    const resp = await axios.post(`${url}/user`, {name: Uname, password: Pass});
+
+    console.log(resp.data)
+
     ClockAnim.classList.remove("visible");
     ClockAnim.classList.add("invisible");
 

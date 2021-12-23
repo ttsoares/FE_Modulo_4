@@ -20,17 +20,16 @@ async function testCredentials(Uname, Pass) {
   ClockAnim.classList.remove("invisible");
   ClockAnim.classList.add("visible");
 
-  await axios.put(`${url}/pass`, {name: Uname, pass: Pass})
+  console.log(Uname, Pass)
+
+  await axios.get(`${url}/pass`, { params: { name: Uname, password: Pass } } )
   .then(function (response) {
 
     ClockAnim.classList.remove("visible");
     ClockAnim.classList.add("invisible");
 
-    indice_user = response.data
-    //sessionStorage.setItem("indice", indice_user);
-    //sessionStorage.setItem("name", Uname);
-
-    location.href = `./messages.html?${indice_user}|${Uname}`;
+    // Call Messagens page with 'user id' and 'user name'
+    location.href = `./messages.html?${response}|${Uname}`;
 
   })
   .catch(function (error) {
