@@ -20,8 +20,6 @@ async function testCredentials(Uname, Pass) {
   ClockAnim.classList.remove("invisible");
   ClockAnim.classList.add("visible");
 
-  console.log(Uname, Pass)
-
   await axios.get(`${url}/pass`, { params: { name: Uname, password: Pass } } )
   .then(function (response) {
 
@@ -29,7 +27,7 @@ async function testCredentials(Uname, Pass) {
     ClockAnim.classList.add("invisible");
 
     // Call Messagens page with 'user id' and 'user name'
-    location.href = `./messages.html?${response}|${Uname}`;
+    location.href = `./messages.html?${response.data}|${Uname}`;
 
   })
   .catch(function (error) {

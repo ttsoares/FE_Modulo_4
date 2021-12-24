@@ -4,10 +4,8 @@ const parms = queryString.split("|");
 let Uindice = parms[0]
 let nameUser = parms[1]
 
-//let Uindice = sessionStorage.getItem("indice");
-//let nameUser = sessionStorage.getItem("name");
 let messages = []
-let id;
+let id; // Those 'id' are identifyers inside the HTML code
 
 const UPname = nameUser[0].toUpperCase() + nameUser.slice(1);
 let Username = document.getElementById("userName");
