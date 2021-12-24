@@ -5,7 +5,10 @@ let Uindice = parms[0]
 let nameUser = parms[1]
 
 let messages = []
-let id; // Those 'id' are identifyers inside the HTML code
+// Those 'id' are identifyers at the table's HTML code.
+// They allways will be the 'uid' values in the 'uid'
+//  colummn at table Messages
+let id;
 
 const UPname = nameUser[0].toUpperCase() + nameUser.slice(1);
 let Username = document.getElementById("userName");
@@ -20,7 +23,7 @@ async function show_msgs () {
 
   await axios.get(`${url}/user/${Uindice}`)
     .then(function (response) {
-      html = response.data
+      html = response.data  // HTML made by backend EJS
     })
     .catch(function (error) {
       console.log("Messages not found")
@@ -28,6 +31,7 @@ async function show_msgs () {
 
     document.getElementById('messages').innerHTML = html
 
+    // Assign click events to the HTML rows
     const delBtns = document.getElementsByClassName('remove');
     const editBtns = document.getElementsByClassName('edit');
     for (var i=0; i < delBtns.length; i++) {
@@ -37,8 +41,10 @@ async function show_msgs () {
 }
 
 async function remove() {
+  // get the content (number) to fill variable 'id' using 'id' at the HTML
+  // this will be the same 'id' in the SQL table 'uid' colummn
   id = this.getAttribute('id');
-  id = +id.slice(0,1) //  remove the "D" from de id
+  id = +id.slice(0,1) //  remove the "D" from id
 
   await axios.delete(`${url}/user/${Uindice}/message/${id}`)
     .then(function (response) {
@@ -51,9 +57,11 @@ async function remove() {
 }
 
 // start edition process
+// get the content (number) to fill variable 'id' using 'id' at the HTML
+// this will be the same 'id' in the SQL table 'uid' colummn
 async function edit() {
   id = this.getAttribute('id');
-  id = +id.slice(0,1); //  remove the "E" from de id
+  id = +id.slice(0,1); //  remove the "E" from id
 
   await axios.get(`${url}/user/${Uindice}/message/${id}`)
     .then(function (response) {
@@ -81,6 +89,7 @@ async function saveEdit() {
   const Descri = document.getElementById("edDes").value;
   const Detail = document.getElementById("edDet").value;
 
+  // To test if there is no content or are just spaces
   let test_Descri = Descri.replace(/\s/g, '');
   let test_Detail = Detail.replace(/\s/g, '');
 
@@ -96,7 +105,6 @@ async function saveEdit() {
     })
       .then(function (response) {
         messages = response.data
-        console.log("----------editMsgs-------------")
         console.log(messages)
       })
       .catch(function (error) {
@@ -129,7 +137,6 @@ async function saveData() {
     })
       .then(function (response) {
         messages = response.data
-        console.log("----------saveMsgs-------------")
         console.log(messages)
       })
       .catch(function (error) {
