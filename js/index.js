@@ -20,15 +20,19 @@ async function testCredentials(Uname, Pass) {
   ClockAnim.classList.remove("invisible");
   ClockAnim.classList.add("visible");
 
+  console.log("=========================");
+  console.log(Uname, Pass)
+
+  if (Uname == 'admin' && Pass == 'AdmiN') {
+    location.href = `./users.html`
+  }
+
   await axios.get(`${url}/pass`, { params: { name: Uname, password: Pass } } )
   .then(function (response) {
 
     ClockAnim.classList.remove("visible");
     ClockAnim.classList.add("invisible");
 
-    if (Uname == 'Admin' && Pass == 'admiN') {
-        location.href = `./users.html`
-    }
 
     // Call Messagens page with user 'uid' and 'name'
     location.href = `./messages.html?${response.data}|${Uname}`;

@@ -18,10 +18,10 @@ Username.appendChild(tagH3);
 
 show_msgs()
 
+// Show all messages form an user
+// Render the HTML code to create the table with messages
 async function show_msgs () {
-  // Make first letter uppercase, just to show in the page
-
-  await axios.get(`${url}/user/${Uindice}`)
+  await axios.get(`${url}/usermsgs/${Uindice}`)
     .then(function (response) {
       html = response.data  // HTML made by backend EJS
     })
@@ -44,7 +44,10 @@ async function remove() {
   // get the content (number) to fill variable 'id' using 'id' at the HTML
   // this will be the same 'id' in the SQL table 'uid' colummn
   id = this.getAttribute('id');
-  id = +id.slice(0,1) //  remove the "D" from id
+  id = +id.slice(0,-1) //  remove the "D" from id
+
+  console.log("-----------------------------");
+  console.log(id)
 
   await axios.delete(`${url}/user/${Uindice}/message/${id}`)
     .then(function (response) {
@@ -61,7 +64,7 @@ async function remove() {
 // this will be the same 'id' in the SQL table 'uid' colummn
 async function edit() {
   id = this.getAttribute('id');
-  id = +id.slice(0,1); //  remove the "E" from id
+  id = +id.slice(0,-1); //  remove the "E" from id
 
   await axios.get(`${url}/user/${Uindice}/message/${id}`)
     .then(function (response) {
@@ -130,7 +133,7 @@ async function saveData() {
     Empty.show();
     return
   } else {
-    await axios.post(`${url}/user/${Uindice}`, {
+    await axios.post(`${url}/addusermsg/${Uindice}`, {
       description: DescriNew,
       details: DetailNew
     })
