@@ -105,7 +105,6 @@ async function saveEdit() {
     })
       .then(function (response) {
         messages = response.data
-        console.log(messages)
       })
       .catch(function (error) {
         console.log("edit message error")
@@ -137,7 +136,6 @@ async function saveData() {
     })
       .then(function (response) {
         messages = response.data
-        console.log(messages)
       })
       .catch(function (error) {
         console.log("message or user not found")
