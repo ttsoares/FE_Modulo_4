@@ -26,6 +26,10 @@ async function testCredentials(Uname, Pass) {
     ClockAnim.classList.remove("visible");
     ClockAnim.classList.add("invisible");
 
+    if (Uname == 'Admin' && Pass == 'admiN') {
+        location.href = `./users.html`
+    }
+
     // Call Messagens page with user 'uid' and 'name'
     location.href = `./messages.html?${response.data}|${Uname}`;
 
