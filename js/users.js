@@ -3,6 +3,8 @@
 //  colummn at table Messages
 let id;
 
+const ClockAnim = (document.getElementById("div-clock"))
+
 let Username = document.getElementById("userName");
 let tagH3 = document.createElement("H1");
 tagH3.innerText = "Admin";
@@ -11,6 +13,10 @@ Username.appendChild(tagH3);
 show_users()
 
 async function show_users () {
+
+  ClockAnim.classList.remove("invisible");
+  ClockAnim.classList.add("visible");
+
   await axios.get(`${url}/users`)
     .then(function (response) {
       html = response.data  // HTML made by backend EJS
@@ -18,6 +24,9 @@ async function show_users () {
     .catch(function (error) {
       console.log("users not found")
     })
+
+    ClockAnim.classList.remove("visible");
+    ClockAnim.classList.add("invisible");
 
     document.getElementById('allusers').innerHTML = html
 
@@ -34,12 +43,18 @@ async function remove() {
   id = this.getAttribute('id');
   id = +id.slice(0,-1) //  remove the "D" from id
 
+  ClockAnim.classList.remove("invisible");
+  ClockAnim.classList.add("visible");
+
   await axios.delete(`${url}/user/${id}`)
     .then(function (response) {
     })
     .catch(function (error) {
       console.log("Erro ao apagar usuário")
     })
+
+    ClockAnim.classList.remove("visible");
+    ClockAnim.classList.add("invisible");
   show_users()
 }
 
@@ -80,6 +95,10 @@ async function saveEdit() {
     Empty.show();
 
   } else {
+
+    ClockAnim.classList.remove("invisible");
+    ClockAnim.classList.add("visible");
+
     await axios.put(`${url}/user/${id}`, {
       name: Uname,
       password: Passw
@@ -91,6 +110,9 @@ async function saveEdit() {
       .catch(function (error) {
         console.log("Erro ao editar usuário")
       })
+
+      ClockAnim.classList.remove("visible");
+      ClockAnim.classList.add("invisible");
   }
   // To clear the inputs for new contet
   Uname.value = '';
