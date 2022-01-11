@@ -3,19 +3,19 @@
 //  colummn at table Messages
 let id;
 
-const ClockAnim = (document.getElementById("div-clock"))
+const clockAnim = (document.getElementById("div-clock"))
 
-let Username = document.getElementById("userName");
+let userName = document.getElementById("userName");
 let tagH3 = document.createElement("H1");
 tagH3.innerText = "Admin";
-Username.appendChild(tagH3);
+userName.appendChild(tagH3);
 
 show_users()
 
 async function show_users () {
 
-  ClockAnim.classList.remove("invisible");
-  ClockAnim.classList.add("visible");
+  clockAnim.classList.remove("invisible");
+  clockAnim.classList.add("visible");
 
   await axios.get(`${url}/users`)
     .then(function (response) {
@@ -25,8 +25,8 @@ async function show_users () {
       console.log("users not found")
     })
 
-    ClockAnim.classList.remove("visible");
-    ClockAnim.classList.add("invisible");
+    clockAnim.classList.remove("visible");
+    clockAnim.classList.add("invisible");
 
     document.getElementById('allusers').innerHTML = html
 
@@ -43,8 +43,8 @@ async function remove() {
   id = this.getAttribute('id');
   id = +id.slice(0,-1) //  remove the "D" from id
 
-  ClockAnim.classList.remove("invisible");
-  ClockAnim.classList.add("visible");
+  clockAnim.classList.remove("invisible");
+  clockAnim.classList.add("visible");
 
   await axios.delete(`${url}/user/${id}`)
     .then(function (response) {
@@ -53,8 +53,8 @@ async function remove() {
       console.log("Erro ao apagar usuário")
     })
 
-    ClockAnim.classList.remove("visible");
-    ClockAnim.classList.add("invisible");
+    clockAnim.classList.remove("visible");
+    clockAnim.classList.add("invisible");
   show_users()
 }
 
@@ -66,14 +66,14 @@ async function edit() {
   await axios.get(`${url}/eduser/${id}`)
     .then(function (response) {
       user = response.data
-      let Name = user.name;
-      let Password = user.password;
-      let Edit_Nam = document.getElementById("edNam");
-      let Edit_Pas = document.getElementById("edPas");
-      Edit_Nam.value = Name;
-      Edit_Pas.value = Password;
-      let EditModal = new bootstrap.Modal(document.getElementById('editModal'));
-      EditModal.show();
+      let uName = user.name;
+      let password = user.password;
+      let edit_Nam = document.getElementById("edNam");
+      let edit_Pas = document.getElementById("edPas");
+      edit_Nam.value = uName;
+      edit_Pas.value = password;
+      let editModal = new bootstrap.Modal(document.getElementById('editModal'));
+      editModal.show();
   })
   .catch(function (error) {
     console.log("Usuário NÃO encontrado")
@@ -82,26 +82,26 @@ async function edit() {
 
 // Back from the editModal to store new content
 async function saveEdit() {
-  const Uname = document.getElementById("edNam").value;
-  const Passw = document.getElementById("edPas").value;
+  const usrName = document.getElementById("edNam").value;
+  const passWord = document.getElementById("edPas").value;
 
   // To test if there is no content or are just spaces
-  let test_Descri = Uname.replace(/\s/g, '');
-  let test_Detail = Passw.replace(/\s/g, '');
+  let test_Descri = usrName.replace(/\s/g, '');
+  let test_Detail = passWord.replace(/\s/g, '');
 
   if (test_Detail =='' || test_Descri == '') {
 
-    const Empty = new bootstrap.Modal(document.getElementById('empty_filed'));
-    Empty.show();
+    const empty = new bootstrap.Modal(document.getElementById('empty_filed'));
+    empty.show();
 
   } else {
 
-    ClockAnim.classList.remove("invisible");
-    ClockAnim.classList.add("visible");
+    clockAnim.classList.remove("invisible");
+    clockAnim.classList.add("visible");
 
     await axios.put(`${url}/user/${id}`, {
-      name: Uname,
-      password: Passw
+      name: usrName,
+      password: passWord
     })
       .then(function (response) {
         backUser = response.data
@@ -111,12 +111,12 @@ async function saveEdit() {
         console.log("Erro ao editar usuário")
       })
 
-      ClockAnim.classList.remove("visible");
-      ClockAnim.classList.add("invisible");
+      clockAnim.classList.remove("visible");
+      clockAnim.classList.add("invisible");
   }
   // To clear the inputs for new contet
-  Uname.value = '';
-  Passw.value = '';
+  usrName.value = '';
+  passWord.value = '';
 
   show_users();
 }

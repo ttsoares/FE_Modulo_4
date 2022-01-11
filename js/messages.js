@@ -1,7 +1,7 @@
 const queryString = location.search.substring(1);
 const parms = queryString.split("|");
 
-let Uindice = parms[0]
+let usrIndice = parms[0]
 let nameUser = parms[1]
 
 let messages = []
@@ -10,18 +10,17 @@ let messages = []
 //  colummn at table Messages
 let id;
 
-const UPname = nameUser[0].toUpperCase() + nameUser.slice(1);
-let Username = document.getElementById("userName");
+let usrName = document.getElementById("userName");
 let tagH3 = document.createElement("H1");
 tagH3.innerText = nameUser;
-Username.appendChild(tagH3);
+usrName.appendChild(tagH3);
 
 show_msgs()
 
 // Show all messages form an user
 // Render the HTML code to create the table with messages
 async function show_msgs () {
-  await axios.get(`${url}/usermsgs/${Uindice}`)
+  await axios.get(`${url}/usermsgs/${usrIndice}`)
     .then(function (response) {
       html = response.data  // HTML made by backend EJS
     })
@@ -46,10 +45,7 @@ async function remove() {
   id = this.getAttribute('id');
   id = +id.slice(0,-1) //  remove the "D" from id
 
-  console.log("-----------------------------");
-  console.log(id)
-
-  await axios.delete(`${url}/user/${Uindice}/message/${id}`)
+  await axios.delete(`${url}/user/${usrIndice}/message/${id}`)
     .then(function (response) {
     })
     .catch(function (error) {
@@ -66,7 +62,7 @@ async function edit() {
   id = this.getAttribute('id');
   id = +id.slice(0,-1); //  remove the "E" from id
 
-  await axios.get(`${url}/user/${Uindice}/message/${id}`)
+  await axios.get(`${url}/user/${usrIndice}/message/${id}`)
     .then(function (response) {
       mess = response.data
 
@@ -102,7 +98,7 @@ async function saveEdit() {
     Empty.show();
 
   } else {
-    await axios.put(`${url}/user/${Uindice}/message/${id}`, {
+    await axios.put(`${url}/user/${usrIndice}/message/${id}`, {
       description: Descri,
       details: Detail
     })
@@ -133,7 +129,7 @@ async function saveData() {
     Empty.show();
     return
   } else {
-    await axios.post(`${url}/addusermsg/${Uindice}`, {
+    await axios.post(`${url}/addusermsg/${usrIndice}`, {
       description: DescriNew,
       details: DetailNew
     })

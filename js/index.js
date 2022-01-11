@@ -1,45 +1,45 @@
 function getInputValues() {
 
-   let Username = (document.getElementById("userName").value.toLowerCase());
-   let Password = (document.getElementById("passWord").value);
+   let userName = (document.getElementById("userName").value.toLowerCase());
+   let passWord = (document.getElementById("passWord").value);
 
-   let test_Username = Username.replace(/\s/g, ''); // remove espaces
+   let test_Username = userName.replace(/\s/g, ''); // remove espaces
 
    if (test_Username=='' ) {
-      var Empty = new bootstrap.Modal(document.getElementById('empty_filed'));
-      Empty.show();
+      var empty = new bootstrap.Modal(document.getElementById('empty_filed'));
+      empty.show();
       return
    }
-   testCredentials(Username, Password)
+   testCredentials(userName, passWord)
 }
 
-async function testCredentials(Uname, Pass) {
+async function testCredentials(uName, password) {
 
-  const ClockAnim = (document.getElementById("div-clock"))
+  const clockAnim = (document.getElementById("div-clock"))
 
-  ClockAnim.classList.remove("invisible");
-  ClockAnim.classList.add("visible");
+  clockAnim.classList.remove("invisible");
+  clockAnim.classList.add("visible");
 
-  if (Uname == 'admin' && Pass == 'AdmiN') {
+  if (uName == 'admin' && password == 'AdmiN') {
     location.href = `./users.html`
   }
 
-  await axios.get(`${url}/pass`, { params: { name: Uname, password: Pass } } )
+  await axios.get(`${url}/pass`, { params: { name: uName, password: password } } )
   .then(function (response) {
 
-    ClockAnim.classList.remove("visible");
-    ClockAnim.classList.add("invisible");
+    clockAnim.classList.remove("visible");
+    clockAnim.classList.add("invisible");
 
     // Call Messagens page with user 'uid' and 'name'
-    location.href = `./messages.html?${response.data}|${Uname}`;
+    location.href = `./messages.html?${response.data}|${uName}`;
 
   })
   .catch(function (error) {
-    ClockAnim.classList.remove("visible");
-    ClockAnim.classList.add("invisible");
+    clockAnim.classList.remove("visible");
+    clockAnim.classList.add("invisible");
 
-    var Credentials = new bootstrap.Modal(document.getElementById('credentials'));
-    Credentials.show();
+    var credentials = new bootstrap.Modal(document.getElementById('credentials'));
+    credentials.show();
   })
 }
 

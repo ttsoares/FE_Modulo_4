@@ -1,48 +1,48 @@
 function NewUser() {
-  let Username = (document.getElementById("userName").value.toLowerCase());
-  let Password1 = (document.getElementById("passWord_1").value);
-  let Password2 = (document.getElementById("passWord_2").value);
+  let userName = (document.getElementById("userName").value.toLowerCase());
+  let password1 = (document.getElementById("passWord_1").value);
+  let password2 = (document.getElementById("passWord_2").value);
 
-  let test_Username = Username.replace(/\s/g, ''); // remove spaces
+  let test_Username = userName.replace(/\s/g, ''); // remove spaces
 
   if (test_Username=='') {
-    // Empty user fields are not allowed
-    const Empty = new bootstrap.Modal(document.getElementById('empty_field'));
-    Empty.show();
+    // empty user fields are not allowed
+    const empty = new bootstrap.Modal(document.getElementById('empty_field'));
+    empty.show();
     return false;
   };
 
-  if ( Password1 !== Password2) {
+  if ( password1 !== password2) {
     // Passwords do not match
     let passModal = new bootstrap.Modal(document.getElementById('passModal'));
     passModal.show()
     return false;
   };
 
-  criaUser(Username, Password1)
+  criaUser(userName, password1)
 }
 
-async function criaUser(Uname, Pass) {
-  const ClockAnim = (document.getElementById("div-clock"))
+async function criaUser(usrName, password) {
+  const clockAmin = (document.getElementById("div-clock"))
 
   try {
-    ClockAnim.classList.remove("invisible");
-    ClockAnim.classList.add("visible");
+    clockAmin.classList.remove("invisible");
+    clockAmin.classList.add("visible");
 
-    const resp = await axios.post(`${url}/adduser`, {name: Uname, password: Pass});
+    const resp = await axios.post(`${url}/adduser`, {name: usrName, password: password});
 
-    ClockAnim.classList.remove("visible");
-    ClockAnim.classList.add("invisible");
+    clockAmin.classList.remove("visible");
+    clockAmin.classList.add("invisible");
 
-    const Success = new bootstrap.Modal(document.getElementById('success'));
-    Success.show();
+    const success = new bootstrap.Modal(document.getElementById('success'));
+    success.show();
     return
   } catch (error) {
-    ClockAnim.classList.remove("visible");
-    ClockAnim.classList.add("invisible");
+    clockAmin.classList.remove("visible");
+    clockAmin.classList.add("invisible");
 
-    const Failure = new bootstrap.Modal(document.getElementById('user_exists'));
-    Failure.show();
+    const failure = new bootstrap.Modal(document.getElementById('user_exists'));
+    failure.show();
     return
   }
 }
