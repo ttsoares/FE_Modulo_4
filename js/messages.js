@@ -13,7 +13,7 @@ let id;
 const UPname = nameUser[0].toUpperCase() + nameUser.slice(1);
 let Username = document.getElementById("userName");
 let tagH3 = document.createElement("H1");
-tagH3.innerText = UPname;
+tagH3.innerText = nameUser;
 Username.appendChild(tagH3);
 
 show_msgs()
