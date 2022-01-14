@@ -7,7 +7,7 @@ let nameUser = parms[1]
 const token = sessionStorage.getItem("token");
 const verify_token = md5(`${nameUser}${usrIndice}`);
 
-//if (token !== verify_token) logout();
+if (token !== verify_token) logout();
 
 let messages = []
 // Those 'id' are identifyers at the table's HTML code.
