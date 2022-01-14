@@ -3,6 +3,10 @@
 //  colummn at table Messages
 let id;
 
+// Only works with the Admin token
+const token = sessionStorage.getItem("token");
+if (token !== "667072b391f95350d140c6353216a64c" ) logout();
+
 const clockAnim = (document.getElementById("div-clock"))
 
 let userName = document.getElementById("userName");

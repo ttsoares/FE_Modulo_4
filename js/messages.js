@@ -4,16 +4,22 @@ const parms = queryString.split("|");
 let usrIndice = parms[0]
 let nameUser = parms[1]
 
+const token = sessionStorage.getItem("token");
+const verify_token = md5(`${nameUser}${usrIndice}`);
+
+//if (token !== verify_token) logout();
+
 let messages = []
 // Those 'id' are identifyers at the table's HTML code.
 // They allways will be the 'uid' values in the 'uid'
 //  colummn at table Messages
 let id;
 
-let usrName = document.getElementById("userName");
+const UPname = nameUser[0].toUpperCase() + nameUser.slice(1);
+let Username = document.getElementById("userName");
 let tagH3 = document.createElement("H1");
-tagH3.innerText = nameUser;
-usrName.appendChild(tagH3);
+tagH3.innerText = UPname;
+Username.appendChild(tagH3);
 
 show_msgs()
 
@@ -150,6 +156,6 @@ async function saveData() {
 function logout() {
   nameUser = "";
   sessionStorage.clear();
-  id = null;
+  //id = null;
   location.href = "./index.html";
 }

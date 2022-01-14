@@ -19,6 +19,18 @@ function NewUser() {
     return false;
   };
 
+  // Test if all username letters are between 'a' and 'z'
+  let charNumber;
+  for (var i = 0; i < userName.length; i++) {
+    charNumber = userName[i].charCodeAt(0);
+    console.log(charNumber);
+    if (charNumber < 97 || charNumber > 122) {
+      const failure = new bootstrap.Modal(document.getElementById('failure'));
+      failure.show();
+      return
+    }
+  }
+
   criaUser(userName, password1)
 }
 

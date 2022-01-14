@@ -1,6 +1,8 @@
+// Get username and password
 function getInputValues() {
 
-   let userName = (document.getElementById("userName").value.toLowerCase());
+  //let userName = (document.getElementById("userName").value.toLowerCase());
+   let userName = (document.getElementById("userName").value);
    let passWord = (document.getElementById("passWord").value);
 
    let test_Username = userName.replace(/\s/g, ''); // remove espaces
@@ -13,6 +15,7 @@ function getInputValues() {
    testCredentials(userName, passWord)
 }
 
+// Test correct paring of username / password
 async function testCredentials(uName, password) {
 
   const clockAnim = (document.getElementById("div-clock"))
@@ -20,15 +23,23 @@ async function testCredentials(uName, password) {
   clockAnim.classList.remove("invisible");
   clockAnim.classList.add("visible");
 
+  // Go to 'Admin'mode to access the users RUD
   if (uName == 'admin' && password == 'AdmiN') {
+    const token = "667072b391f95350d140c6353216a64c";
+    sessionStorage.setItem("token", token);
     location.href = `./users.html`
   }
 
+  //If user/pass are OK BE returns userID
   await axios.get(`${url}/pass`, { params: { name: uName, password: password } } )
   .then(function (response) {
 
     clockAnim.classList.remove("visible");
     clockAnim.classList.add("invisible");
+
+    // Token to prevem the direct access of messagens without login
+    const token = md5(`${uName}${response.data}`);
+    sessionStorage.setItem("token", token);
 
     // Call Messagens page with user 'uid' and 'name'
     location.href = `./messages.html?${response.data}|${uName}`;
