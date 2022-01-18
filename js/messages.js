@@ -15,18 +15,18 @@ let messages = []
 //  colummn at table Messages
 let id;
 
-const UPname = nameUser[0].toUpperCase() + nameUser.slice(1);
-let Username = document.getElementById("userName");
+const uPname = nameUser[0].toUpperCase() + nameUser.slice(1);
+let idUsername = document.getElementById("userName");
 let tagH3 = document.createElement("H1");
-tagH3.innerText = UPname;
-Username.appendChild(tagH3);
+tagH3.innerText = uPname;
+idUsername.appendChild(tagH3);
 
 show_msgs()
 
 // Show all messages form an user
 // Render the HTML code to create the table with messages
 async function show_msgs () {
-  await axios.get(`${url}/usermsgs/${usrIndice}`)
+  await axios.get(`${url}/messages/${usrIndice}`)
     .then(function (response) {
       html = response.data  // HTML made by backend EJS
     })
@@ -72,17 +72,17 @@ async function edit() {
     .then(function (response) {
       mess = response.data
 
-      let Description = mess.description;
-      let Details = mess.details;
+      let description = mess.description;
+      let details = mess.details;
 
-      const Edit_Des = document.getElementById("edDes");
-      const Edit_Det = document.getElementById("edDet");
+      const idEdit_Des = document.getElementById("edDes");
+      const idEdit_Det = document.getElementById("edDet");
 
-      Edit_Des.value = Description;
-      Edit_Det.value = Details;
+      idEdit_Des.value = description;
+      idEdit_Det.value = details;
 
-      var EditModal = new bootstrap.Modal(document.getElementById('editModal'));
-      EditModal.show();
+      const modEditModal = new bootstrap.Modal(document.getElementById('editModal'));
+      modEditModal.show();
   })
   .catch(function (error) {
     console.log("Messages not found")
@@ -91,65 +91,64 @@ async function edit() {
 
 // Back from the editModal to store new content
 async function saveEdit() {
-  const Descri = document.getElementById("edDes").value;
-  const Detail = document.getElementById("edDet").value;
+  const idDescri = document.getElementById("edDes").value;
+  const idDetail = document.getElementById("edDet").value;
 
   // To test if there is no content or are just spaces
-  let test_Descri = Descri.replace(/\s/g, '');
-  let test_Detail = Detail.replace(/\s/g, '');
+  let test_Descri = idDescri.replace(/\s+/g, '');
+  let test_Detail = idDetail.replace(/\s+/g, '');
 
   if (test_Detail =='' || test_Descri == '') {
-
-    const Empty = new bootstrap.Modal(document.getElementById('empty_filed'));
-    Empty.show();
-
-  } else {
-    await axios.put(`${url}/user/${usrIndice}/message/${id}`, {
-      description: Descri,
-      details: Detail
-    })
-      .then(function (response) {
-        messages = response.data
-      })
-      .catch(function (error) {
-        console.log("edit message error")
-      })
-    //return messages
+    const modEmpty = new bootstrap.Modal(document.getElementById('empty_filed'));
+    modEmpty.show();
+    return
   }
+
+  await axios.put(`${url}/user/${usrIndice}/message/${id}`, {
+    description: idDescri,
+    details: idDetail
+  })
+  .then(function (response) {
+      messages = response.data
+  })
+  .catch(function (error) {
+      console.log("edit message error")
+  })
+
   show_msgs();
 }
 
 // Store new messages
 async function saveData() {
-  const Descri = document.getElementById("desCrip");
-  const Detail = document.getElementById("detAil");
+  const idDescri = document.getElementById("desCrip");
+  const idDetail = document.getElementById("detAil");
   //Separation to be able to clean the fields for new content at the end
-  let DescriNew = Descri.value;
-  let DetailNew = Detail.value;
+  let descriNew = idDescri.value;
+  let detailNew = idDetail.value;
   // Remove spaces
-  const test_Descri = DescriNew.replace(/\s/g, '');
-  const test_Detail = DetailNew.replace(/\s/g, '');
+  const test_Descri = descriNew.replace(/\s+/g, '');
+  const test_Detail = detailNew.replace(/\s+/g, '');
 
   if (test_Detail =='' || test_Descri == '') {
-    const Empty = new bootstrap.Modal(document.getElementById('empty_filed'));
-    Empty.show();
+    const modEmpty = new bootstrap.Modal(document.getElementById('empty_filed'));
+    modEmpty.show();
     return
-  } else {
-    await axios.post(`${url}/addusermsg/${usrIndice}`, {
-      description: DescriNew,
-      details: DetailNew
-    })
-      .then(function (response) {
-        messages = response.data
-      })
-      .catch(function (error) {
-        console.log("message or user not found")
-      })
-    }
+  }
+
+  await axios.post(`${url}/message/${usrIndice}`, {
+    description: descriNew,
+    details: detailNew
+  })
+  .then(function (response) {
+    messages = response.data
+  })
+  .catch(function (error) {
+    console.log("message or user not found")
+  })
 
   // To clear the inputs for new contet
-  Descri.value = '';
-  Detail.value = '';
+  idDescri.value = '';
+  idDetail.value = '';
   show_msgs();
 }
 

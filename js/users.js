@@ -5,7 +5,7 @@ let id;
 
 // Only works with the Admin token
 const token = sessionStorage.getItem("token");
-if (token !== "667072b391f95350d140c6353216a64c" ) logout();
+if (token !== "5d1fa092a4f036e3935d38506ee8bf56" ) logout();
 
 const clockAnim = (document.getElementById("div-clock"))
 
@@ -59,6 +59,7 @@ async function remove() {
 
     clockAnim.classList.remove("visible");
     clockAnim.classList.add("invisible");
+
   show_users()
 }
 
@@ -67,7 +68,7 @@ async function edit() {
   id = this.getAttribute('id');
   id = +id.slice(0,-1); //  remove the "E" from id
 
-  await axios.get(`${url}/eduser/${id}`)
+  await axios.get(`${url}/user/${id}`)
     .then(function (response) {
       user = response.data
       let uName = user.name;
@@ -95,8 +96,8 @@ async function saveEdit() {
 
   if (test_Detail =='' || test_Descri == '') {
 
-    const empty = new bootstrap.Modal(document.getElementById('empty_filed'));
-    empty.show();
+    const emptyModal = new bootstrap.Modal(document.getElementById('empty_filed'));
+    emptyModal.show();
 
   } else {
 

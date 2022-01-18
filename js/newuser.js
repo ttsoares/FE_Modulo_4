@@ -23,7 +23,7 @@ function NewUser() {
   let charNumber;
   for (var i = 0; i < userName.length; i++) {
     charNumber = userName[i].charCodeAt(0);
-    console.log(charNumber);
+
     if (charNumber < 97 || charNumber > 122) {
       const failure = new bootstrap.Modal(document.getElementById('failure'));
       failure.show();
@@ -41,7 +41,7 @@ async function criaUser(usrName, password) {
     clockAmin.classList.remove("invisible");
     clockAmin.classList.add("visible");
 
-    const resp = await axios.post(`${url}/adduser`, {name: usrName, password: password});
+    const resp = await axios.post(`${url}/user/store`, {name: usrName, password: password});
 
     clockAmin.classList.remove("visible");
     clockAmin.classList.add("invisible");

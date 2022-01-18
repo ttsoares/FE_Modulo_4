@@ -8,8 +8,8 @@ function getInputValues() {
    let test_Username = userName.replace(/\s/g, ''); // remove espaces
 
    if (test_Username=='' ) {
-      var empty = new bootstrap.Modal(document.getElementById('empty_filed'));
-      empty.show();
+      const emptyModal = new bootstrap.Modal(document.getElementById('empty_filed'));
+      emptyModal.show();
       return
    }
    testCredentials(userName, passWord)
@@ -24,14 +24,20 @@ async function testCredentials(uName, password) {
   clockAnim.classList.add("visible");
 
   // Go to 'Admin'mode to access the users RUD
-  if (uName == 'admin' && password == 'AdmiN') {
-    const token = "667072b391f95350d140c6353216a64c";
+  if (uName == 'admin') {
+    const testAdmin = md5(`${uName}${password}`);
+    if (testAdmin !== "5d1fa092a4f036e3935d38506ee8bf56") logout();
+
+    const token = "5d1fa092a4f036e3935d38506ee8bf56";
     sessionStorage.setItem("token", token);
     location.href = `./users.html`
   }
 
   //If user/pass are OK BE returns userID
-  await axios.get(`${url}/pass`, { params: { name: uName, password: password } } )
+  await axios.post(`${url}/user`, {
+    name: uName,
+    password: password
+  })
   .then(function (response) {
 
     clockAnim.classList.remove("visible");
@@ -49,11 +55,17 @@ async function testCredentials(uName, password) {
     clockAnim.classList.remove("visible");
     clockAnim.classList.add("invisible");
 
-    var credentials = new bootstrap.Modal(document.getElementById('credentials'));
+    const credentials = new bootstrap.Modal(document.getElementById('credentials'));
     credentials.show();
   })
 }
 
+function logout() {
+  nameUser = "";
+  sessionStorage.clear();
+  id = null;
+  location.href = "./index.html";
+}
 
 // Function to allow the submission form with ENTER key
 (function getEnter() {
@@ -70,8 +82,3 @@ async function testCredentials(uName, password) {
     }
   });
 })();
-// With this solution one can not press ENTER at the
-// userName because this somehow reset this input content !
-// Even thoug the event listener is attached only to
-// the passWord ID !!
-// I was unable to fix this...
